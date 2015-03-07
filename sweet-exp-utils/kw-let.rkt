@@ -1,11 +1,12 @@
-#lang sweet-exp racket
+#lang sweet-exp racket/base
 
 provide kw-let
         kw-let*
         kw-letrec
 
 require syntax/parse/define
-        for-syntax racket/syntax
+        for-syntax racket/base
+                   racket/syntax
 module+ test
   require rackunit
 
