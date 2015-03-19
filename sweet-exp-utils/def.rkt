@@ -1,9 +1,11 @@
 #lang sweet-exp racket/base
 
 provide all-defined-out()
+        block
 
 require racket/match
         racket/block
+        math/flonum
         rackunit
         syntax/parse/define
         defpat
@@ -23,6 +25,17 @@ define-simple-macro
   check-equal? a b
 
 def ^ = expt
+
+def (e^ n) = exp(n)
+def (2^ n) = {2 ^ n}
+def (10^ n) = {10 ^ n}
+
+def ln(x) = log(x)
+def log2(x) = fllog2(fl(x))
+def logb(b x) = fllogb(fl(b) fl(x))
+def log10(x) = logb(10 x)
+
+def √ = sqrt
 
 module+ test
   def f(list(x)) = x
