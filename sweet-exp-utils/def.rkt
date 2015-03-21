@@ -47,9 +47,12 @@ define-syntax set!
       datum->syntax(#'s '/ update-source-location(#'s #:span 1) #'s)
       syntax (set! x = {x / v})
 
-define-simple-macro
-  chk a:expr (~datum =) b:expr
-  check-equal? a b
+define-syntax chk
+  lambda (stx)
+    syntax-parse stx
+      (chk a:expr (~datum =) b:expr)
+        syntax/loc stx
+          check-equal? a b
 
 def ^ = expt
 
