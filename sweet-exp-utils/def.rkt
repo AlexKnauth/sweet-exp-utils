@@ -15,13 +15,24 @@ require racket/match
         for-syntax racket/base
                    syntax/parse
                    syntax/srcloc
+                   my-cond/proc+condexp
 
 define-simple-macro
+  define-simple-macro/my-cond-def (~and pat (macro:id . _)) body ... template
+  define-syntax macro
+    proc+condexp
+      syntax-parser
+        [pat body ... #'template]
+      syntax-parser
+        [(~and stx (my-cond (~and d pat) . stuff))
+         (syntax/loc #'stx (my-cond #:defs [d] . stuff))]
+
+define-simple-macro/my-cond-def
   def a:expr (~datum =) b:expr ...+
   defpat a
     block b ...
 
-define-simple-macro
+define-simple-macro/my-cond-def
   defm a:expr (~datum =) b:expr ...+
   match-define a
     block b ...
@@ -92,4 +103,12 @@ module+ test
       def y = '(1 2 3)
       set! y += '(4 5 6)
       chk y = '(5 7 9)
+  test-case "def within my-cond"
+    check-equal?
+      my-cond
+        if {2 < 1}
+          error("bad")
+        def x = 1
+        else x
+      1
 
