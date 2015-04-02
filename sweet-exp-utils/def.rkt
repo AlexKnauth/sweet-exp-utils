@@ -44,19 +44,19 @@ define-syntax set!
     (set! x:id (~and s (~datum +=)) v:expr)
       #:with +
       datum->syntax(#'s '+ update-source-location(#'s #:span 1) #'s)
-      syntax (set! x = {x + v})
+      syntax (set! x = (+ x v))
     (set! x:id (~and s (~datum -=)) v:expr)
       #:with -
       datum->syntax(#'s '- update-source-location(#'s #:span 1) #'s)
-      syntax (set! x = {x - v})
+      syntax (set! x = (- x v))
     (set! x:id (~and s (~datum *=)) v:expr)
       #:with *
       datum->syntax(#'s '* update-source-location(#'s #:span 1) #'s)
-      syntax (set! x = {x * v})
+      syntax (set! x = (* x v))
     (set! x:id (~and s (~datum /=)) v:expr)
       #:with /
       datum->syntax(#'s '/ update-source-location(#'s #:span 1) #'s)
-      syntax (set! x = {x / v})
+      syntax (set! x = (/ x v))
 
 define-syntax chk
   lambda (stx)
