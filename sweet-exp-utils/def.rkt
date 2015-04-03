@@ -6,10 +6,11 @@ provide all-defined-out()
 require racket/match
         racket/block
         racket/contract/base
+        racket/list
         math/flonum
         rackunit
         syntax/parse/define
-        only-in racket/base [set! rkt:set!]
+        prefix-in rkt: racket/base
         defpat
         my-cond/iffy
         for-syntax racket/base
@@ -77,6 +78,16 @@ def logb(b x) = fllogb(fl(b) fl(x))
 def log10(x) = logb(10 x)
 
 def √ = sqrt
+
+def =(a . rst) =
+  my-cond
+    if empty?(rst)
+      #t
+    else-if number?(a)
+      {(andmap number? rst) and (apply rkt:= a rst)}
+    else
+      for/and ([b in-list(rst)])
+        equal? a b
 
 module+ test
   def f(list(x)) = x
