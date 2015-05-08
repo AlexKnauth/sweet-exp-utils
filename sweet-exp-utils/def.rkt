@@ -2,12 +2,14 @@
 
 provide all-defined-out()
         block
+        pi
 
 require racket/match
         racket/block
         racket/contract/base
         racket/list
         math/flonum
+        racket/math
         rackunit
         syntax/parse/define
         prefix-in rkt: racket/base
@@ -79,7 +81,12 @@ def log10(x) = logb(10 x)
 
 def √ = sqrt
 
-def =(a . rst) =
+def (2* x) = {2 * x}
+def (1/2* x) = {1/2 * x}
+
+def (1/ x) = {1 / x}
+
+def (= a . rst) =
   my-cond
     if empty?(rst)
       #t
@@ -88,6 +95,10 @@ def =(a . rst) =
     else
       for/and ([b in-list(rst)])
         equal? a b
+
+def 2pi = {2 * pi}
+def π = pi
+def 2π = 2pi
 
 module+ test
   def f(list(x)) = x
