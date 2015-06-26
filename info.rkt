@@ -12,5 +12,8 @@
 
 (define build-deps '("scribble-lib"
                      "racket-doc"
+                     "htdp-lib"
+                     "htdp-doc"
+                     "scribble-code-examples"
                      ))
 
